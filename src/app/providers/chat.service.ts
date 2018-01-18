@@ -55,8 +55,6 @@ export class ChatService {
   }
 
   agregarMensaje( texto: string) {
-    
-    // TODO falta el UID del usuario
     let mensaje: Mensaje = {
       nombre: this.usuario.nombre,
       mensaje: texto,
