@@ -27,10 +27,15 @@ export class ChatService {
   }
 
   login( proveedor: string) {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    if (proveedor === 'google') {
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    }else {
+      this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+    }
   }
 
   logout() {
+    this.usuario = {};
     this.afAuth.auth.signOut();
   }
 
@@ -53,9 +58,10 @@ export class ChatService {
     
     // TODO falta el UID del usuario
     let mensaje: Mensaje = {
-      nombre: 'ErnestoDemo',
+      nombre: this.usuario.nombre,
       mensaje: texto,
-      fecha: new Date().getTime()
+      fecha: new Date().getTime(),
+      uid: this.usuario.uid
     };
 
     return this.itemsCollection.add( mensaje );
